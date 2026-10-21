@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoAI Studio</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 30px auto;
+            background: #1f2937;
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            color: #a78bfa;
+        }
+
+        textarea {
+            width: 95%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin: 10px 5px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #7c3aed;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6d28d9;
+        }
+
+        #result {
+            margin-top: 20px;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎨 VideoAI Studio</h1>
+        <p>G‘oyangizni yozing va ijod qilishni boshlang!</p>
+
+        <textarea id="prompt"
+            placeholder="Masalan: bog‘da o‘ynayotgan yoqimtoy mushuk..."></textarea>
+
+        <br>
+
+        <button onclick="showMessage('image')">🖼️ Rasm yaratish</button>
+        <button onclick="showMessage('text')">📝 Matn yaratish</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function showMessage(type) {
+            const prompt = document.getElementById("prompt").value.trim();
+            const result = document.getElementById("result");
+
+            if (!prompt) {
+                result.innerHTML = "<p>Avval matn yozing!</p>";
+                return;
+            }
+
+            if (type === "image") {
+                result.innerHTML =
+                    "<p>🖼️ Rasm yaratish funksiyasini AI modeliga ulash keyingi bosqichda bajariladi.</p>";
+            } else {
+                result.innerHTML =
+                    "<p>📝 Sizning g‘oyangiz: " + escapeHTML(prompt) + "</p>";
+            }
+        }
+
+        function escapeHTML(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
