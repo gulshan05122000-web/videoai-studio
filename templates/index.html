@@ -186,7 +186,7 @@ let wordIndex = 0;
 
 const words = {
     animals: [
-        {uz:"Mushuk",en:"Cat",ru:"Кошка",fr:"Chat",emoji:"🐱"},
+        {uz:"Mushuk",en:"Cat",ru:"Кошка",fr:"Chat",image:"https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/1f408.png"},
         {uz:"It",en:"Dog",ru:"Собака",fr:"Chien",emoji:"🐶"},
         {uz:"Quyon",en:"Rabbit",ru:"Кролик",fr:"Lapin",emoji:"🐰"},
         {uz:"Sigir",en:"Cow",ru:"Корова",fr:"Vache",emoji:"🐮"}
@@ -228,7 +228,9 @@ function showWord() {
     const word = list[wordIndex % list.length];
 
     document.getElementById("result").innerHTML = `
-        <div class="emoji">${word.emoji}</div>
+        <div class="emoji">
+    <img src="${word.image || ''}" alt="${word[currentLanguage]}" style="width:180px; height:180px; object-fit:contain;">
+</div>
         <h2>${word[currentLanguage]}</h2>
         <p>${categoryNames[currentLanguage][currentCategory]}</p>
         <button onclick="speakWord('${word[currentLanguage].replace(/'/g, "\\'")}')">
