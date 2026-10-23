@@ -1,104 +1,308 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoAI Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VideoAI Studio — Til o‘rganamiz!</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #111827;
-            color: white;
-            text-align: center;
-            padding: 30px 15px;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 650px;
-            margin: 30px auto;
-            background: #1f2937;
-            padding: 25px;
-            border-radius: 20px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #fff1f8, #e6f7ff, #fff9d9);
+    color: #30305c;
+    text-align: center;
+}
 
-        h1 {
-            color: #a78bfa;
-        }
+header {
+    padding: 25px 15px;
+    background: linear-gradient(120deg, #a18cff, #ff9fcf);
+    color: white;
+    border-radius: 0 0 30px 30px;
+}
 
-        textarea {
-            width: 95%;
-            height: 100px;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
 
-        button {
-            margin: 10px 5px;
-            padding: 12px 18px;
-            border: none;
-            border-radius: 10px;
-            background: #7c3aed;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
+header p {
+    font-size: 17px;
+}
 
-        button:hover {
-            background: #6d28d9;
-        }
+select {
+    padding: 12px;
+    border: 0;
+    border-radius: 14px;
+    font-size: 16px;
+    margin: 10px;
+}
 
-        #result {
-            margin-top: 20px;
-            overflow-wrap: anywhere;
-        }
-    </style>
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+.welcome {
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 18px #d8d4ed;
+}
+
+h2 {
+    color: #7759d6;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 25px 0;
+}
+
+.card {
+    background: white;
+    padding: 22px 10px;
+    border-radius: 22px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 4px 12px #ddd8ef;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #b4a0ff;
+}
+
+.emoji {
+    font-size: 48px;
+}
+
+button {
+    background: #8065e8;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 13px 22px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 6px;
+}
+
+button:hover {
+    background: #6247ca;
+}
+
+#result {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 90px;
+}
+
+footer {
+    padding: 25px;
+    background: #e8ddff;
+    margin-top: 30px;
+}
+
+@media (max-width: 500px) {
+    header h1 {
+        font-size: 25px;
+    }
+    main {
+        padding: 12px;
+    }
+}
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>🎨 VideoAI Studio</h1>
-        <p>G‘oyangizni yozing va ijod qilishni boshlang!</p>
 
-        <textarea id="prompt"
-            placeholder="Masalan: bog‘da o‘ynayotgan yoqimtoy mushuk..."></textarea>
+<header>
+    <h1>🌈 VideoAI Studio 🧸</h1>
+    <p id="subtitle">O‘ynaymiz, o‘rganamiz va yangi so‘zlar bilib olamiz!</p>
 
-        <br>
+    <label for="language">🌍 Tilni tanla:</label>
+    <select id="language" onchange="changeLanguage()">
+        <option value="uz">O‘zbekcha</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="fr">Français</option>
+    </select>
+</header>
+<main>
+    <section class="welcome">
+        <h2 id="welcomeTitle">Salom, kichkina bilimdon! 👋</h2>
+        <p id="welcomeText">Bugun yangi so‘zlarni o‘rganamiz. O‘zingga yoqqan bo‘limni tanla!</p>
+    </section>
 
-        <button onclick="showMessage('image')">🖼️ Rasm yaratish</button>
-        <button onclick="showMessage('text')">📝 Matn yaratish</button>
+    <h2 id="chooseTitle">Nimani o‘rganamiz? 🎒</h2>
 
-        <div id="result"></div>
-    </div>
+    <section class="cards">
+        <div class="card" onclick="learn('animals')">
+            <div class="emoji">🐱</div>
+            <h3 id="animalsTitle">Hayvonlar</h3>
+        </div>
 
-    <script>
-        function showMessage(type) {
-            const prompt = document.getElementById("prompt").value.trim();
-            const result = document.getElementById("result");
+        <div class="card" onclick="learn('colors')">
+            <div class="emoji">🎨</div>
+            <h3 id="colorsTitle">Ranglar</h3>
+        </div>
 
-            if (!prompt) {
-                result.innerHTML = "<p>Avval matn yozing!</p>";
-                return;
-            }
+        <div class="card" onclick="learn('fruits')">
+            <div class="emoji">🍎</div>
+            <h3 id="fruitsTitle">Mevalar</h3>
+        </div>
+        <div class="card" onclick="learn('numbers')">
+            <div class="emoji">🔢</div>
+            <h3 id="numbersTitle">Raqamlar</h3>
+        </div>
+    </section>
 
-            if (type === "image") {
-                result.innerHTML =
-                    "<p>🖼️ Rasm yaratish funksiyasini AI modeliga ulash keyingi bosqichda bajariladi.</p>";
-            } else {
-                result.innerHTML =
-                    "<p>📝 Sizning g‘oyangiz: " + escapeHTML(prompt) + "</p>";
-            }
+    <section id="result">
+        <h3>✨ Boshlash uchun biror bo‘limni tanla!</h3>
+    </section>
+
+    <button onclick="nextWord()" id="nextButton">Keyingi so‘z ➡️</button>
+</main>
+
+<footer>
+    <p>💜 VideoAI Studio — har kuni yangi bilim!</p>
+</footer>
+
+<script>
+let currentLanguage = "uz";
+let currentCategory = "animals";
+let wordIndex = 0;
+
+const words = {
+    animals: [
+        {uz:"Mushuk",en:"Cat",ru:"Кошка",fr:"Chat",emoji:"🐱"},
+        {uz:"It",en:"Dog",ru:"Собака",fr:"Chien",emoji:"🐶"},
+        {uz:"Quyon",en:"Rabbit",ru:"Кролик",fr:"Lapin",emoji:"🐰"},
+        {uz:"Sigir",en:"Cow",ru:"Корова",fr:"Vache",emoji:"🐮"}
+    ],
+    colors: [
+        {uz:"Qizil",en:"Red",ru:"Красный",fr:"Rouge",emoji:"🔴"},
+        {uz:"Ko‘k",en:"Blue",ru:"Синий",fr:"Bleu",emoji:"🔵"},
+        {uz:"Yashil",en:"Green",ru:"Зелёный",fr:"Vert",emoji:"🟢"},
+        {uz:"Sariq",en:"Yellow",ru:"Жёлтый",fr:"Jaune",emoji:"🟡"}
+    ],
+    fruits: [
+        {uz:"Olma",en:"Apple",ru:"Яблоко",fr:"Pomme",emoji:"🍎"},
+        {uz:"Banan",en:"Banana",ru:"Банан",fr:"Banane",emoji:"🍌"},
+        {uz:"Uzum",en:"Grapes",ru:"Виноград",fr:"Raisin",emoji:"🍇"}
+    ],
+    numbers: [
+        {uz:"Bir",en:"One",ru:"Один",fr:"Un",emoji:"1️⃣"},
+        {uz:"Ikki",en:"Two",ru:"Два",fr:"Deux",emoji:"2️⃣"},
+        {uz:"Uch",en:"Three",ru:"Три",fr:"Trois",emoji:"3️⃣"}
+    ]
+};
+
+const categoryNames = {
+    uz:{animals:"Hayvonlar",colors:"Ranglar",fruits:"Mevalar",numbers:"Raqamlar"},
+    en:{animals:"Animals",colors:"Colors",fruits:"Fruits",numbers:"Numbers"},
+    ru:{animals:"Животные",colors:"Цвета",fruits:"Фрукты",numbers:"Числа"},
+    fr:
+    {animals:"Animaux",colors:"Couleurs",fruits:"Fruits",numbers:"Nombres"}
+};
+
+function learn(category) {
+    currentCategory = category;
+    wordIndex = 0;
+    showWord();
+}
+
+function showWord() {
+    const list = words[currentCategory];
+    const word = list[wordIndex % list.length];
+
+    document.getElementById("result").innerHTML = `
+        <div class="emoji">${word.emoji}</div>
+        <h2>${word[currentLanguage]}</h2>
+        <p>${categoryNames[currentLanguage][currentCategory]}</p>
+        <button onclick="speakWord('${word[currentLanguage].replace(/'/g, "\\'")}')">
+            🔊 ${currentLanguage === "uz" ? "Eshitish" : currentLanguage === "en" ? "Listen" : currentLanguage === "ru" ? "Слушать" : "Écouter"}
+        </button>`
+    ;
+}
+
+function nextWord() {
+    wordIndex++;
+    showWord();
+}
+
+function speakWord(word) {
+    if (!("speechSynthesis" in window)) {
+        alert("Bu brauzer ovozli o‘qishni qo‘llab-quvvatlamaydi.");
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(word);
+    const voices = {uz:"uz-UZ",en:"en-US",ru:"ru-RU",fr:"fr-FR"};
+    utterance.lang = voices[currentLanguage];
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+}
+
+function changeLanguage() {
+    currentLanguage = document.getElementById("language").value;
+
+    const translations = {
+        uz:{
+            subtitle:"O‘ynaymiz, o‘rganamiz va yangi so‘zlar bilib olamiz!",
+            welcome:"Salom, kichkina bilimdon! 👋",
+            intro:"Bugun yangi so‘zlarni o‘rganamiz. O‘zingga yoqqan bo‘limni tanla!",
+            choose:"Nimani o‘rganamiz? 🎒",
+            next:"Keyingi so‘z ➡️"
+        },
+        en:{
+            subtitle:"Let's play, learn and discover new words!",
+            welcome:"Hello, little learner! 👋",
+            intro:"Let's learn new words today. Choose a category!",
+            choose:"What shall we learn? 🎒",
+            next:"Next word ➡️"
+        },
+        ru:{
+            subtitle:"Играем, учимся и узнаём новые слова!",
+            welcome:"Привет, маленький умник! 👋",
+            intro:"Сегодня учим новые слова. Выбери раздел!",
+            choose:"Что будем учить? 🎒",
+            next:"Следующее слово ➡️"
+        },fr:{
+            subtitle:"Jouons, apprenons et découvrons de nouveaux mots !",
+            welcome:"Bonjour, petit apprenant ! 👋",
+            intro:"Apprenons de nouveaux mots. Choisis une catégorie !",
+            choose:"Qu’allons-nous apprendre ? 🎒",
+            next:"Mot suivant ➡️"
         }
+    };
 
-        function escapeHTML(text) {
-            const div = document.createElement("div");
-            div.textContent = text;
-            return div.innerHTML;
-        }
-    </script>
+    const t = translations[currentLanguage];
+    document.getElementById("subtitle").textContent = t.subtitle;
+    document.getElementById("welcomeTitle").textContent = t.welcome;
+    document.getElementById("welcomeText").textContent = t.intro;
+    document.getElementById("chooseTitle").textContent = t.choose;
+    document.getElementById("nextButton").textContent = t.next;
+
+    for (const category in categoryNames[currentLanguage]) {
+        const id = category + "Title";
+        document.getElementById(id).textContent = categoryNames[currentLanguage][category];
+    }
+
+    showWord();
+}
+</script>
+
 </body>
 </html>
